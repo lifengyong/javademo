@@ -12,6 +12,7 @@
     <modules>
 
         <module>springboot-javaconsole</module>
+        <module>springboot-the-simple-web</module>
     </modules>
 
 
