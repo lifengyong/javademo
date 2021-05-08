@@ -5,4 +5,5 @@ import com.neu.hikari.demo.modules.data.entity.User;
 
 public interface IUserService extends IService<User> {
     void addUser(User user);
+    void addUserMore();
 }

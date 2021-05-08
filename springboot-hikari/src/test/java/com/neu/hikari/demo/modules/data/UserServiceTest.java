@@ -17,7 +17,7 @@ public class UserServiceTest {
     @Autowired
     IUserService userService;
 
-    @Test
+//    @Test
     public void addUser() {
         User u = new User();
         u.setId(UUIDGenerator.getUUID());
@@ -28,7 +28,18 @@ public class UserServiceTest {
 
         User after = userService.getById(u.getId());
         Assert.assertEquals(after.getName(), u.getName());
-        userService.removeById(u.getId());
+//        userService.removeById(u.getId());
+    }
+
+    @Test
+    public void addUserMore() {
+        long start  = System.currentTimeMillis();
+
+        userService.addUserMore();
+
+        long usetime = System.currentTimeMillis() - start;
+        System.out.println("use time : " + usetime);
+
     }
 
 }
