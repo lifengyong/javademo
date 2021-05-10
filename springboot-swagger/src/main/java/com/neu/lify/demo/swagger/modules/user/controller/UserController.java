@@ -1,6 +1,8 @@
 package com.neu.lify.demo.swagger.modules.user.controller;
 
 import com.neu.lify.demo.swagger.modules.user.model.User;
+import com.neu.lify.demo.swagger.modules.user.model.UserPageResult;
+import com.neu.lify.demo.swagger.modules.user.model.UserQueryModel;
 import com.neu.lify.demo.swagger.modules.user.service.IUserService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +67,14 @@ public class UserController {
         list.add(userService.createUser());
 
         return list;
+    }
+
+    @PostMapping("/queryUserForPage")
+    @ResponseBody
+    @ApiOperation(value = "分页获取用户信息", httpMethod = "POST")
+    public UserPageResult queryUserForPage(@RequestBody UserQueryModel userQueryModel) {
+
+        return userService.queryUserForPage(userQueryModel);
     }
 
     @GetMapping("/queryUserByNameAndPhone")

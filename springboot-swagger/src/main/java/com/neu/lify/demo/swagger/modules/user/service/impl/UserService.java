@@ -1,10 +1,15 @@
 package com.neu.lify.demo.swagger.modules.user.service.impl;
 
+import com.neu.lify.demo.swagger.common.page.PageUtil;
 import com.neu.lify.demo.swagger.modules.user.model.User;
+import com.neu.lify.demo.swagger.modules.user.model.UserPageResult;
+import com.neu.lify.demo.swagger.modules.user.model.UserQueryModel;
 import com.neu.lify.demo.swagger.modules.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements IUserService {
@@ -21,5 +26,26 @@ public class UserService implements IUserService {
         u.setCreateTime(LocalDateTime.now());
 
         return u;
+    }
+
+    @Override
+    public UserPageResult queryUserForPage(UserQueryModel userQueryModel) {
+        UserPageResult result = new UserPageResult();
+        PageUtil<User> page = new PageUtil<>();
+
+        page.setCurrentPage(1);
+        page.setPageSize(10);
+        page.setTotalPage(20);
+        page.setTotalCount(200);
+
+        List<User> list = new ArrayList<>();
+        list.add(createUser());list.add(createUser());list.add(createUser());list.add(createUser());list.add(createUser());
+        list.add(createUser());list.add(createUser());list.add(createUser());list.add(createUser());list.add(createUser());
+
+        page.setList(list);
+
+        result.setResult(page);
+
+        return result;
     }
 }
