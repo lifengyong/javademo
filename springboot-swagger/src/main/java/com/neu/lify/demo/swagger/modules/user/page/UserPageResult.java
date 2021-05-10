@@ -1,7 +1,8 @@
-package com.neu.lify.demo.swagger.modules.user.model;
+package com.neu.lify.demo.swagger.modules.user.page;
 
-import com.neu.lify.demo.swagger.common.page.PageUtil;
-import com.neu.lify.demo.swagger.common.page.ResultUtil;
+import com.neu.lify.demo.swagger.modules.user.model.User;
+import com.neu.lify.demo.swagger.modules.user.page.PageUtil;
+import com.neu.lify.demo.swagger.modules.user.page.ResultUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

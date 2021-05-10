@@ -1,4 +1,4 @@
-package com.neu.lify.demo.swagger.common.page;
+package com.neu.lify.demo.swagger.modules.user.page;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

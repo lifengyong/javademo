@@ -1,7 +1,7 @@
 package com.neu.lify.demo.swagger.modules.user.controller;
 
 import com.neu.lify.demo.swagger.modules.user.model.User;
-import com.neu.lify.demo.swagger.modules.user.model.UserPageResult;
+import com.neu.lify.demo.swagger.modules.user.page.UserPageResult;
 import com.neu.lify.demo.swagger.modules.user.model.UserQueryModel;
 import com.neu.lify.demo.swagger.modules.user.service.IUserService;
 import io.swagger.annotations.*;

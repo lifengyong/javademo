@@ -1,8 +1,8 @@
 package com.neu.lify.demo.swagger.modules.user.service.impl;
 
-import com.neu.lify.demo.swagger.common.page.PageUtil;
+import com.neu.lify.demo.swagger.modules.user.page.PageUtil;
 import com.neu.lify.demo.swagger.modules.user.model.User;
-import com.neu.lify.demo.swagger.modules.user.model.UserPageResult;
+import com.neu.lify.demo.swagger.modules.user.page.UserPageResult;
 import com.neu.lify.demo.swagger.modules.user.model.UserQueryModel;
 import com.neu.lify.demo.swagger.modules.user.service.IUserService;
 import org.springframework.stereotype.Service;
