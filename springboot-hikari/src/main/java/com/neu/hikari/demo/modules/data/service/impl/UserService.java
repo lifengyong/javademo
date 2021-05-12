@@ -38,22 +38,23 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
                 e.printStackTrace();
             }
 
-            pool.execute(() ->{
-                User u = new User();
-                u.setId(String.valueOf(System.currentTimeMillis()) + new Random().nextInt(6));
-                u.setName("老牛");
-                u.setAddress("北京市大兴区北京经济技术开发区");
-                u.setIdno("110221196002061256");
-                u.setPhone("01087260266");
-                u.setSex("m");
-                u.setRemark("" + System.currentTimeMillis());
-                u.setCreateTime(LocalDateTime.now());
-                System.out.println("adduser");
-                addUser(u);
-            });
+            pool.execute(this::run);
             i++;
         }
 
     }
 
+    private void run() {
+        User u = new User();
+        u.setId(String.valueOf(System.currentTimeMillis()) + new Random().nextInt(6));
+        u.setName("老牛");
+        u.setAddress("北京市大兴区北京经济技术开发区");
+        u.setIdno("110221196002061256");
+        u.setPhone("01087260266");
+        u.setSex("m");
+        u.setRemark("" + System.currentTimeMillis());
+        u.setCreateTime(LocalDateTime.now());
+        System.out.println("adduser");
+        addUser(u);
+    }
 }
