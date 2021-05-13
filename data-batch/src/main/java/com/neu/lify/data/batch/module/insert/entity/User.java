@@ -1,4 +1,4 @@
-package com.neu.lify.data.batch.insert.entity;
+package com.neu.lify.data.batch.module.insert.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neu.lify.data.batch.common.entity.SuperEntity;
