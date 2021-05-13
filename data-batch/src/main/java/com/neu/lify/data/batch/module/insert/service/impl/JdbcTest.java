@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class JdbcTest {
     public static final String URL = "jdbc:mysql://localhost:3306/crash_course";
     public static final String USER = "root";
-    public static final String PASSWORD = "Yka@yunkouan.local";
+    public static final String PASSWORD = "";
 
 //    public static void main(String[] args) throws Exception {
 //        //1.加载驱动程序

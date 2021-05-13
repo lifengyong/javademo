@@ -13,7 +13,7 @@ public class UserJdbc extends Thread{
         String url = "jdbc:mysql://localhost:3306/crash_course";
         String name = "com.mysql.cj.jdbc.Driver";
         String user = "root";
-        String password = "Yka@yunkouan.local";
+        String password = "";
         Connection conn = null;
         try {
             Class.forName(name);
