@@ -13,9 +13,10 @@ import java.util.Map;
 /**
  * Auth0工具类，根据博客文章修改
  * 博客参考地址：https://blog.csdn.net/u014204541/article/details/103906208
+ * github: https://github.com/jwtk/jjwt/
  */
 public class JwtUtil {
-    private static final long EXPIRE = 60 * 1000; //过期时间
+    private static final long EXPIRE = 5 * 60 * 1000; //过期时间
 
     public static final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);//密钥，动态生成的密钥
 
@@ -26,7 +27,6 @@ public class JwtUtil {
      * @return
      */
     public static String generate(Map<String, Object> claims) {
-        Date nowDate = new Date();
         //过期时间,设定为一分钟
         Date expireDate = new Date(System.currentTimeMillis() + EXPIRE);
         //头部信息,可有可无
@@ -42,7 +42,7 @@ public class JwtUtil {
                 // .setSubject("weimi")//主题
                 // .setIssuer("weimi") //发送方
                 .setClaims(claims)  //自定义claims
-                .setIssuedAt(nowDate)//当前时间
+                .setIssuedAt(new Date())//当前时间
                 .setExpiration(expireDate) //过期时间
                 .signWith(key)//签名算法和key
                 .compact();
@@ -75,7 +75,7 @@ public class JwtUtil {
      * @return
      */
     public static boolean isSigned(String token){
-        return  Jwts.parserBuilder()
+        return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .isSigned(token);
@@ -93,9 +93,9 @@ public class JwtUtil {
                     .build()
                     .parseClaimsJws(token);
             return true;
-        }catch (JwtException  e){
-            System.out.println(e.getMessage());
-            return false;
+        }catch (Exception e){
+//            e.printStackTrace();
+            throw e;
         }
     }
 

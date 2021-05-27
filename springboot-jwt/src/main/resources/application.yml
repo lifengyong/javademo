@@ -1,0 +1,8 @@
+server:
+  port: 20000
+  servlet:
+    context-path: /jwt
+
+# jwt token生成密钥
+jwt:
+  key: fa09fecc568d4f1a97ae2b04ab95aaaa

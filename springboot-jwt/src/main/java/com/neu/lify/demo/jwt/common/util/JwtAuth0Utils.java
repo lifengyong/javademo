@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * Auth0工具类，根据博客文章修改
  * 博客参考地址：https://blog.csdn.net/u014204541/article/details/103906208
+ * github:  https://github.com/auth0/java-jwt
  */
 public class JwtAuth0Utils {
     //过期时间 30分钟
