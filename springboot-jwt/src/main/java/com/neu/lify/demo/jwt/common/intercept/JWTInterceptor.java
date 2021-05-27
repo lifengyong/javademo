@@ -2,6 +2,7 @@ package com.neu.lify.demo.jwt.common.intercept;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neu.lify.demo.jwt.common.util.JwtUtil;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -36,36 +37,37 @@ public class JWTInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("state", true);
-
+        String msg = "";
         try {
             boolean verify = JwtUtil.verify(token);
             if (verify) {
-                map.put("msg", "验证通过");
-                String json = new ObjectMapper().writeValueAsString(map);
+//                System.out.println("验证通过");
                 response.setStatus(200);
-                System.out.println(json);
-//                responseMessage(response, json);
+
+                Claims claims = JwtUtil.getClaim(token);
+                String username = (String)claims.get("username");
+                System.out.println("username: " + username);
+
                 return true; // 通过验证
             }
         } catch (SignatureException e) {
-            map.put("msg", "无效签名");
+            msg = "无效签名";
         } catch (UnsupportedJwtException e) {
-            map.put("msg", "不支持的签名");
+            msg = "不支持的签名";
         } catch (ExpiredJwtException e) {
-            map.put("msg", "token过期");
-        } catch (MalformedJwtException e) { // IllegalArgumentException
-            map.put("msg", "不支持的签名格式");
+            msg = "token过期";
+        } catch (MalformedJwtException e) {
+            msg = "不支持的签名格式";
         } catch (Exception e) {
-            map.put("msg", "token无效");
+            msg = "token无效";
         }
 
-        map.put("state", false);
+        Map<String, Object> map = new HashMap<>();
+        map.put("mag", msg);
+        map.put("status", false);
 
         // 将map转为json
         String json = new ObjectMapper().writeValueAsString(map);
-        System.out.println(json);
         responseMessage(response, json);
 
         return false;

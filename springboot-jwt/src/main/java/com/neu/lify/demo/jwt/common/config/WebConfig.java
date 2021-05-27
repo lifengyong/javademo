@@ -34,7 +34,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login/*");
-//                .excludePathPatterns("/error");
     }
 
     @Bean
