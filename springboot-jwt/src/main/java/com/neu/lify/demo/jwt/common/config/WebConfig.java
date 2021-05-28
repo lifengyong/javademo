@@ -1,5 +1,6 @@
 package com.neu.lify.demo.jwt.common.config;
 
+import com.neu.lify.demo.jwt.common.intercept.Auth0Interceptor;
 import com.neu.lify.demo.jwt.common.intercept.JWTInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor())
+//        registry.addInterceptor(jwtInterceptor())
+        registry.addInterceptor(auth0Interceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login/*");
     }
@@ -39,5 +41,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public JWTInterceptor jwtInterceptor() {
         return new JWTInterceptor();
+    }
+
+    @Bean
+    public Auth0Interceptor auth0Interceptor() {
+        return new Auth0Interceptor();
     }
 }

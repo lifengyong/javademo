@@ -19,9 +19,7 @@ import java.util.Map;
  */
 public class JwtAuth0Utils {
     //过期时间 30分钟
-    private static final long EXPIRE_TIME = 30 * 60 * 1000;
-    //私钥
-    private static final String TOKEN_SECRET = "fa09fecc568d4f1a97ae2b04ab95aaaa";
+    private static final long EXPIRE_TIME = 2 * 60 * 1000;
 
     /**
      * 生成签名
@@ -29,12 +27,12 @@ public class JwtAuth0Utils {
      * @param map
      * @return
      */
-    public static String sign(Map<String,Object> map) {
+    public static String sign(String tokenSecret, Map<String,Object> map) {
         try {
             // 设置过期时间
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             // 私钥和加密算法
-            Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+            Algorithm algorithm = Algorithm.HMAC256(tokenSecret);
             // 设置头部信息
             Map<String, Object> header = new HashMap<>(2);
             header.put("typ", "jwt");
@@ -72,16 +70,16 @@ public class JwtAuth0Utils {
      * @param **token**
      * @return
      */
-    public static boolean verify(String token){
+    public static boolean verify(String tokenSecret, String token){
         try {
-            Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+            Algorithm algorithm = Algorithm.HMAC256(tokenSecret);
             JWTVerifier verifier = JWT.require(algorithm).build();
             verifier.verify(token);
 
             return true;
         } catch (Exception e){
-            e.printStackTrace();
-            return false;
+//            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -90,8 +88,8 @@ public class JwtAuth0Utils {
      * @param token
      * @return
      */
-    public static Map<String, Claim> getClaims(String token){
-        Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+    public static Map<String, Claim> getClaims(String tokenSecret, String token){
+        Algorithm algorithm = Algorithm.HMAC256(tokenSecret);
         JWTVerifier verifier = JWT.require(algorithm).build();
         Map<String, Claim> jwt = verifier.verify(token).getClaims();
         return jwt;
@@ -102,16 +100,16 @@ public class JwtAuth0Utils {
      * @param token
      * @return
      */
-    public static Date getExpiresAt(String token){
-        Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+    public static Date getExpiresAt(String tokenSecret, String token){
+        Algorithm algorithm = Algorithm.HMAC256(tokenSecret);
         return  JWT.require(algorithm).build().verify(token).getExpiresAt();
     }
 
     /**
      * 获取jwt发布时间
      */
-    public static Date getIssuedAt(String token){
-        Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+    public static Date getIssuedAt(String tokenSecret, String token){
+        Algorithm algorithm = Algorithm.HMAC256(tokenSecret);
         return JWT.require(algorithm).build().verify(token).getIssuedAt();
     }
 
@@ -121,9 +119,9 @@ public class JwtAuth0Utils {
      * @param token
      * @return true:过期   false:没过期
      */
-    public static boolean isExpired(String token) {
+    public static boolean isExpired(String tokenSecret, String token) {
         try {
-            final Date expiration = getExpiresAt(token);
+            final Date expiration = getExpiresAt(tokenSecret, token);
             return expiration.before(new Date());
         }catch (TokenExpiredException e) {
             return true;
@@ -163,6 +161,8 @@ public class JwtAuth0Utils {
 
     }
     public static void main(String[] args) {
+        //私钥
+        String TOKEN_SECRET = "fa09fecc568d4f1a97ae2b04ab95aaaa";
         Map<String,Object> map = new HashMap<>();
         map.put("userId","123456");
         map.put("rose","admin");
@@ -171,14 +171,14 @@ public class JwtAuth0Utils {
         map.put("Long",112L);
         map.put("bool",true);
         map.put("date",new Date());
-        String token = sign(map); //生成token
-        System.out.println(verify(token));//验证token是否正确
-        String dd = getClaims(token).get("userId").asString(); //使用方法
+        String token = sign(TOKEN_SECRET, map); //生成token
+        System.out.println(verify(TOKEN_SECRET, token));//验证token是否正确
+        String dd = getClaims(TOKEN_SECRET, token).get("userId").asString(); //使用方法
         System.out.println(dd);
-        System.out.println("获取签发token时间：" +getIssuedAt(token));
-        System.out.println("获取过期时间："+getExpiresAt(token));
+        System.out.println("获取签发token时间：" +getIssuedAt(TOKEN_SECRET, token));
+        System.out.println("获取过期时间："+getExpiresAt(TOKEN_SECRET, token));
         // Thread.sleep(1000*40);
-        System.out.println("检查是否已过期："+isExpired(token));
+        System.out.println("检查是否已过期："+isExpired(TOKEN_SECRET, token));
         System.out.println("获取头"+getHeaderByBase64(token));
         System.out.println("获取负荷"+getPayloadByBase64(token));
     }

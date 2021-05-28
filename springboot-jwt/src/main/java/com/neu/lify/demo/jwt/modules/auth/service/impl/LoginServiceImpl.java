@@ -1,5 +1,6 @@
 package com.neu.lify.demo.jwt.modules.auth.service.impl;
 
+import com.neu.lify.demo.jwt.common.util.JwtAuth0Utils;
 import com.neu.lify.demo.jwt.common.util.JwtUtil;
 import com.neu.lify.demo.jwt.modules.auth.service.LoginService;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +23,11 @@ public class LoginServiceImpl implements LoginService {
         claims.put("username", username);
         claims.put("level", 20);//增加个key，测试用
 
-        String token = JwtUtil.generate(claims);
+        //jjwt
+//        String token = JwtUtil.generate(claims);
+
+        //auth0
+        String token = JwtAuth0Utils.sign(jwtKey, claims);
 
         result.put("token", token);
         result.put("status", "ok");
