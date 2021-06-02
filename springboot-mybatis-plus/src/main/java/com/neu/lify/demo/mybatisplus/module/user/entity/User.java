@@ -41,6 +41,16 @@ public class User {
     private String address;
 
     /**
+     * 工作时间  1:全职 2:兼职
+     */
+    private int work_time;
+
+    /**
+     * 分数
+     */
+    private float score;
+
+    /**
      * 备注
      */
     private String remark;
