@@ -15,7 +15,9 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/*/*.xml
   # 别名包扫描路径，通过该属性可以给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名(即 XML 中调用的时候不用包含包名)
   # 比如 resultType="com.neu.lify.demo.mybatisplus.modules.user.entity.User"  --> resultType="User"
-  typeAliasesPackage: com.neu.lify.demo.mybatisplus.modules
+  typeAliasesPackage: com.neu.lify.demo.mybatisplus.module
+  # 配置枚举类扫描路径，支持统配符 * 或者 ; 分割
+  typeEnumsPackage:  com.neu.lify.demo.mybatisplus.module.*.entity
   # 以下配置均有默认值,可以不设置
   configuration:
     # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射

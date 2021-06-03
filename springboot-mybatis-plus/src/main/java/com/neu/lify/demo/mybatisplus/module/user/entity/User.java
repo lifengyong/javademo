@@ -2,6 +2,7 @@ package com.neu.lify.demo.mybatisplus.module.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -51,6 +52,11 @@ public class User {
     private float score;
 
     /**
+     * 用户级别：1，初级；2，中级；3，高级
+     */
+    private GradeEnum grade;
+
+    /**
      * 备注
      */
     private String remark;
@@ -63,5 +69,6 @@ public class User {
     /**
      * 删除(0：正常 1:删除）
      */
+    @TableLogic
     private int status;
 }

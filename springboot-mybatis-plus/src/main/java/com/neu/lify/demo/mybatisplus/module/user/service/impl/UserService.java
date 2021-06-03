@@ -23,7 +23,27 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
 
     @Override
     public void addUser(User user) {
-        super.save(user);
+        save(user);
+    }
+
+    @Override
+    public void delUser(String id) {
+        userMapper.delUser(id);
+    }
+
+    @Override
+    public void delLogicUser(String id) {
+        removeById(id);
+    }
+
+    @Override
+    public User getUserById(String id) {
+        return getById(id);
+    }
+
+    @Override
+    public List<User> selectUserByName(String name) {
+        return userMapper.selectUserByName(name);
     }
 
     @Override

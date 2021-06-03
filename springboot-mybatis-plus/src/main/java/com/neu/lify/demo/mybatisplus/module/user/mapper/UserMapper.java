@@ -6,9 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neu.lify.demo.mybatisplus.module.user.entity.User;
 import com.neu.lify.demo.mybatisplus.module.user.model.UserQuery;
 import com.neu.lify.demo.mybatisplus.module.user.model.UserResult;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Mapper
 @Component
@@ -23,4 +27,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 分页对象
      */
     IPage<UserResult> selectPageVo(Page<?> page,  @Param(value = "query") UserQuery userQuery);
+
+    @Select("select * from user where name = #{name}")
+    List<User> selectUserByName(@Param("name") String name);
+
+    @Delete("delete from user where id = #{id}")
+    void delUser(@Param("id") String id);
+
 }
