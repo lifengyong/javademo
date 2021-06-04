@@ -12,6 +12,8 @@ import java.util.List;
 public interface IUserService extends IService<User> {
     Result<String> addUser(User user);
 
+    boolean updateUser(User user);
+
     void delUser(String id);
 
     void delLogicUser(String id);

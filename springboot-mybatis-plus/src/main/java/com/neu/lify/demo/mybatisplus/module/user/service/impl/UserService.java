@@ -29,6 +29,17 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     }
 
     @Override
+    public boolean updateUser(User user) {
+        try{
+            boolean result = updateById(user);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public void delUser(String id) {
         userMapper.delUser(id);
     }

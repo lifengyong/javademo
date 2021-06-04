@@ -3,6 +3,7 @@ package com.neu.lify.demo.mybatisplus.common.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -28,8 +29,17 @@ public class MyBatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        /*注意:
+            使用多个功能需要注意顺序关系,建议使用如下顺序
+            1.多租户,动态表名
+            2.分页,乐观锁
+            3.sql性能规范,防止全表更新与删除
+          总结: 对sql进行单次改造的优先放入,不对sql进行改造的最后放入
+         */
         //对于单一数据库类型来说,都建议配置该值,避免每次分页都去抓取数据库类型
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        //乐观锁配置：仅支持 updateById(id) 与 update(entity, wrapper) 方法，在 update(entity, wrapper) 方法下, wrapper 不能复用!!!
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return interceptor;
     }
 

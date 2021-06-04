@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +23,7 @@ public class UserServiceTest {
     @Autowired
     IUserService userService;
 
-    @Test
+//    @Test
     public void addUser() {
         User u = new User();
         u.setName("小羊");
@@ -107,5 +108,29 @@ public class UserServiceTest {
         Assert.assertNull(delUser);
     }
 
+//    @Test
+    public void updateUserLocker() {
+        List<User> userList = userService.getUsers();
+        User user = userList.get(0);
+        user.setUpdateTime(LocalDateTime.now());
+
+//        boolean result = userService.updateUser(user);
+        boolean result = userService.updateById(user);
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void updateUserLockerFail() {
+        User user1 = userService.getUserById("78738c27d187637e6f9e23b7acc15bb3");
+        user1.setUpdateTime(LocalDateTime.now());
+
+        User user2 = userService.getUserById("78738c27d187637e6f9e23b7acc15bb3");
+        user2.setUpdateTime(LocalDateTime.now());
+
+        boolean result1 = userService.updateById(user1);
+        boolean result2 = userService.updateById(user2);
+        Assert.assertTrue(result1);
+        Assert.assertFalse(result2);
+    }
 
 }

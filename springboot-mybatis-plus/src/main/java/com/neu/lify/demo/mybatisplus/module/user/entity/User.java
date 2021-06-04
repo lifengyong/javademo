@@ -1,9 +1,6 @@
 package com.neu.lify.demo.mybatisplus.module.user.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -67,8 +64,16 @@ public class User {
     private LocalDateTime createTime;
 
     /**
-     * 删除(0：正常 1:删除）
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
+
+    /**
+     * 逻辑删除(0：正常 1:删除)
      */
     @TableLogic
     private int status;
+
+    @Version
+    private int version;
 }
