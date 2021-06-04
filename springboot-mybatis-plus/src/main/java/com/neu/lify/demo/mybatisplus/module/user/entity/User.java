@@ -44,7 +44,7 @@ public class User {
     /**
      * 工作时间  1:全职 2:兼职
      */
-    private int work_time;
+    private int workTime;
 
     /**
      * 分数

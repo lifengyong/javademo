@@ -3,6 +3,7 @@ package com.neu.lify.demo.mybatisplus.module.user.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neu.lify.demo.mybatisplus.common.model.Result;
 import com.neu.lify.demo.mybatisplus.module.user.entity.User;
 import com.neu.lify.demo.mybatisplus.module.user.mapper.UserMapper;
 import com.neu.lify.demo.mybatisplus.module.user.model.UserQuery;
@@ -22,8 +23,9 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     private UserMapper userMapper;
 
     @Override
-    public void addUser(User user) {
+    public Result<String> addUser(User user) {
         save(user);
+        return Result.success();
     }
 
     @Override
@@ -49,6 +51,12 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     @Override
     public List<User> getUsers() {
         return super.list();
+    }
+
+    @Override
+    public Result<List<User>> getAllUsers() {
+        List<User> list = getUsers();
+        return Result.of(list);
     }
 
     public IPage<UserResult> selectUserPage(UserQuery userQuery) {

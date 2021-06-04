@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,5 +38,11 @@ public class MyBatisPlusConfig {
         //该属性将会随着 com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor 插件的移除而移除，但是为了避免缓存出现问题还需要这样设置
         return configuration -> configuration.setUseDeprecatedExecutor(false);
     }
+
+//    @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer jacksonEnumsCustomizer(){
+//        //序列化枚举值为数据库存储值,重写toString方法
+//        return builder -> builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+//    }
 
 }

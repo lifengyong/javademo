@@ -2,6 +2,7 @@ package com.neu.lify.demo.mybatisplus.module.user.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.neu.lify.demo.mybatisplus.common.model.Result;
 import com.neu.lify.demo.mybatisplus.module.user.entity.User;
 import com.neu.lify.demo.mybatisplus.module.user.model.UserQuery;
 import com.neu.lify.demo.mybatisplus.module.user.model.UserResult;
@@ -9,7 +10,7 @@ import com.neu.lify.demo.mybatisplus.module.user.model.UserResult;
 import java.util.List;
 
 public interface IUserService extends IService<User> {
-    void addUser(User user);
+    Result<String> addUser(User user);
 
     void delUser(String id);
 
@@ -20,6 +21,8 @@ public interface IUserService extends IService<User> {
     List<User> selectUserByName(String name);
 
     List<User> getUsers();
+
+    Result<List<User>> getAllUsers();
 
     IPage<UserResult> selectUserPage(UserQuery userQuery);
 
