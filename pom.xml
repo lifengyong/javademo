@@ -16,6 +16,7 @@
         <module>springboot-swagger</module>
         <module>springboot-the-simple-web</module>
         <module>data-batch</module>
+        <module>minio-files</module>
     </modules>
 
 
