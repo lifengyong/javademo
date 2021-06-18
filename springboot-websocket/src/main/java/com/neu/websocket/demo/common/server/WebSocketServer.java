@@ -2,16 +2,17 @@ package com.neu.websocket.demo.common.server;
 
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.neu.websocket.demo.common.model.Result;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -108,17 +109,30 @@ public class WebSocketServer {
     }
 
     /**
-     * 实现服务器主动推送
+     * 实现服务器主动推送消息
      */
     public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
     }
 
+    /**
+     * 实现服务器主动推送数据对象
+     */
+    public void sendObject(Result result) throws IOException, EncodeException {
+        this.session.getBasicRemote().sendObject(result);
+    }
+
+    /**
+     * 实现服务器主动推送二进制对象
+     */
+    public void sendBinary(ByteBuffer data) throws IOException, EncodeException {
+        this.session.getBasicRemote().sendBinary(data);
+    }
 
     /**
      * 往指定频道发送消息
      */
-    public void sendInfo(String message, @PathParam("sid") String sid) throws IOException {
+    public void sendMessageToSid(String message, @PathParam("sid") String sid) throws IOException {
         log.info("发送消息到客户端:{}，报文:{}", sid, message);
         if(StrUtil.isNotBlank(sid) && webSocketMap.containsKey(sid)){
             webSocketMap.get(sid).sendMessage(message);
