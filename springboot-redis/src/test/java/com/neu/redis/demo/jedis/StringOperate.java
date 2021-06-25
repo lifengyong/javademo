@@ -8,7 +8,7 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
 /**
- * 参考：" 尼恩 @ 疯狂创客圈"代码
+ * 参考：" 尼恩 @ 疯狂创客圈"
  */
 public class StringOperate {
 
