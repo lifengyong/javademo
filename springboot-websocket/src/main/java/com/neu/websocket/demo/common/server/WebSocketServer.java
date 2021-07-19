@@ -115,21 +115,27 @@ public class WebSocketServer {
      * 实现服务器主动推送消息
      */
     public void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
+        synchronized (session) {
+            this.session.getBasicRemote().sendText(message);
+        }
     }
 
     /**
      * 实现服务器主动推送数据对象
      */
     public void sendObject(Result result) throws IOException, EncodeException {
-        this.session.getBasicRemote().sendObject(result);
+        synchronized (session) {
+            this.session.getBasicRemote().sendObject(result);
+        }
     }
 
     /**
      * 实现服务器主动推送二进制对象
      */
-    public void sendBinary(ByteBuffer data) throws IOException, EncodeException {
-        this.session.getBasicRemote().sendBinary(data);
+    public void sendBinary(ByteBuffer data) throws IOException {
+        synchronized (session) {
+            this.session.getBasicRemote().sendBinary(data);
+        }
     }
 
     /**
