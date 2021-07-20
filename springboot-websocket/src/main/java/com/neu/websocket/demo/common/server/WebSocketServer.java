@@ -9,10 +9,14 @@ import com.neu.websocket.demo.common.model.Result;
 import com.neu.websocket.demo.common.util.MessageDecoder;
 import com.neu.websocket.demo.common.util.MessageEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ConcurrentHashMap;
@@ -135,6 +139,21 @@ public class WebSocketServer {
     public void sendBinary(ByteBuffer data) throws IOException {
         synchronized (session) {
             this.session.getBasicRemote().sendBinary(data);
+        }
+    }
+
+    public void sendPicture(WebSocketSession session, String fileName){
+        FileInputStream input;
+        try {
+            File file=new File("D:\\images\\"+fileName);
+            input = new FileInputStream(file);
+            byte bytes[] = new byte[(int) file.length()];
+            input.read(bytes);
+            BinaryMessage byteMessage=new BinaryMessage(bytes);
+            session.sendMessage(byteMessage);
+            input.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

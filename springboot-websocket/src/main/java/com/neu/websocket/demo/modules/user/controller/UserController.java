@@ -1,6 +1,5 @@
 package com.neu.websocket.demo.modules.user.controller;
 
-import cn.hutool.core.io.FileUtil;
 import com.neu.websocket.demo.common.model.Result;
 import com.neu.websocket.demo.common.server.WebSocketServer;
 import com.neu.websocket.demo.modules.user.model.User;
@@ -10,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 @Slf4j
 @RestController
@@ -58,27 +56,29 @@ public class UserController {
     public String sendBinary() throws IOException {
         String path = "D:/picture/211_V.jpg";
 
-        ByteBuffer buffer = getByteBuffer(path);
 
-        String sid = "abc";
-        WebSocketServer.sendBinaryToSid(buffer, sid);
-        buffer.clear();
-        log.info("sendBinary");
+        FileInputStream input;
+        try {
+            File file = new File(path);
+            input = new FileInputStream(file);
+            byte bytes[] = new byte[(int) file.length()];
+            input.read(bytes);
+
+            ByteBuffer buffer = ByteBuffer.wrap(bytes);
+
+            String sid = "abc";
+            WebSocketServer.sendBinaryToSid(buffer, sid);
+
+            input.close();
+            buffer.clear();
+            log.info("sendBinary");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         return "ok";
-    }
-
-    public ByteBuffer getByteBuffer(String filePaht) throws IOException {
-         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(10); //100kbytes
-         FileChannel readChannel = FileChannel.open(new File(filePaht).toPath());
-         int read;
-         while ((read = readChannel.read(byteBuffer)) != -1) {
-             //buffer从读切换到写
-             byteBuffer.flip();
-         }
-//         readChannel.close();
-
-         return byteBuffer;
     }
 
 }
