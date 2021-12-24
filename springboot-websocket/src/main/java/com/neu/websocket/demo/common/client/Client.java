@@ -3,8 +3,6 @@ package com.neu.websocket.demo.common.client;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
