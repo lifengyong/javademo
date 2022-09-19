@@ -11,7 +11,7 @@ spring:
     #url 前缀为 jdbc:p6spy 跟着冒号为对应数据库连接地址
     url: jdbc:p6spy:mysql://localhost:3306/crash_course?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     username: root
-    password: Yka@yunkouan.local
+    password:
 
 # mybatis-plus相关配置
 mybatis-plus:
