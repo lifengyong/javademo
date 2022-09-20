@@ -26,23 +26,23 @@ public class StudentDao {
     }
 
     public int insertStudent(Student student) {
-        String sql = "INSERT INTO `student`\n" +
+        String sql = "insert into `student`\n" +
                 "(`id`,`name`,`score`,`updatetime`)" +
-                "VALUES(?, ?, ?, ?)";
+                "values(?, ?, ?, ?)";
 
         return jdbcTemplate.update(sql, student.getId(), student.getName(), student.getScore(), student.getUpdatetime());
     }
 
     public int updateStudent(Student student) {
-        String sql = "UPDATE student SET name = ?, score = ?, updatetime = ? where id = ?";
+        String sql = "update student set name = ?, score = ?, updatetime = ? where id = ?";
 
-        return jdbcTemplate.update(sql, student.getName(), student.getScore(), student.getUpdatetime());
+        return jdbcTemplate.update(sql, student.getName(), student.getScore(), student.getUpdatetime(), student.getId());
     }
 
     public Student getStudent(Integer id) {
         final Student student = new Student();
 
-        String sql = "SELECT * FROM student WHERE id = ?";
+        String sql = "select * from student where id = ?";
 
         jdbcTemplate.query(sql, new RowCallbackHandler() {
             @Override
@@ -54,11 +54,11 @@ public class StudentDao {
             }
         }, id);
 
-        return student;
+        return student.getId() == null? null : student;
     }
 
     public int deleteStudent(Integer id) {
-        String sql = "DELETE FROM student WHERE id = ?";
+        String sql = "delete from student where id = ?";
 
         return jdbcTemplate.update(sql, id);
     }
