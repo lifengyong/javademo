@@ -10,13 +10,13 @@
     <packaging>pom</packaging>
 
     <modules>
-
         <module>data-batch</module>
         <module>minio-files</module>
         <module>springboot-hikari</module>
         <module>springboot-javaconsole</module>
         <module>springboot-jdbc-procedure</module>
         <module>springboot-jwt</module>
+        <module>springboot-mybatis-plus</module>
         <module>springboot-redis</module>
         <module>springboot-swagger</module>
         <module>springboot-the-simple-web</module>
